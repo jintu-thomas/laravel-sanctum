@@ -126,4 +126,6 @@ class UserController extends ApiController
 
         return $this ->showMessage('The account has been verified successfully');
     }
+
+    
 }
