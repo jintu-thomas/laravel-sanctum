@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Transformers\TransactionTransformer;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
 use App\Product;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 
 class ProductBuyerTransactionController extends ApiController
 {
+    
     /**
      * Store a newly created resource in storage.
      *

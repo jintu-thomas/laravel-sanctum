@@ -22,6 +22,8 @@ trait ApiResponser
         if ($collection->isEmpty()) {
             return $this->successResponse(['data'=>$collection], $code);
         }
+        $collection = $this ->filterData($collection);
+        $collection = $this ->SortData($collection);
         $collection = $this ->paginate($collection);
         $collection = $this ->cacheResponse($collection);
 
@@ -36,6 +38,14 @@ trait ApiResponser
     {
         return $this->successResponse(['data'=> $message], $code);
     }
+    protected function filterData(Collection $collection)
+    {
+        if (isset($attribute,$value)) {
+            $collection = $collection->where($attribute,$value);
+        }
+        return $collection;
+    }
+
     protected function SortData(Collection $collection)
     {
         if (request()->has('sort_by')) {

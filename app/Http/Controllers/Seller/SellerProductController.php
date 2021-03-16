@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Transformers\ProductTransformer;
 use App\Http\Controllers\ApiController;
 use App\Seller;
 use App\User;

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\User;
 use App\Http\Controllers\ApiController;
+use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +18,7 @@ class UserController extends ApiController
     public function index()
     {
         //
+        $users = User::all();
         $users = User::all();
         return $this->showAll($users);
         
