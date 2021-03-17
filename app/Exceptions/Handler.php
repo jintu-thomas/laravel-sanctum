@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -101,6 +102,10 @@ class Handler extends ExceptionHandler
                 return $this -> errorResponse('can not delete this resource permanently. It is reated with any other resources', 409);
             }
         }
+
+        if ($exception instanceof TokenMismatchException) {
+            return redirect()->back()->withInput($request->input());
+        }
         
         if (config('app.debug')) {
 
@@ -113,6 +118,9 @@ class Handler extends ExceptionHandler
     }
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        if ($this->isFrontend($request)) {
+            return redirect()->guest('login');
+        }
         return $this -> errorResponse('unauthenticated',401);
     }
     /** 
@@ -126,6 +134,18 @@ class Handler extends ExceptionHandler
     protected function covertValidationExceptionToResponse(ValidationException $e, $request)
     {   
         $errors = $e ->validator->errors()->getMessages();
+        if ($this->isFrontend($request)) {
+            return $request->ajax()? response()->json($errors,422) : redirect()
+            ->back()
+            ->withInput($request->input())
+            ->withErrors($errors);
+        }
+
         return $this->errorResponse($errors,422);
+    }
+
+    private function isFrontend($request) 
+    {
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
     }
 }
