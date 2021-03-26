@@ -28,6 +28,7 @@ class Handler extends ExceptionHandler
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernal\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
         \Illuminate\Validation\ValidationException::class,
     ];
 
@@ -115,7 +116,10 @@ class Handler extends ExceptionHandler
         
         return $this ->errorResponse('Unexpected Exception . Try later', 500);
 
+
     }
+
+    
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($this->isFrontend($request)) {
