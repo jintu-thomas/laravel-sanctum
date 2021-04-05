@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 use App\User;
-use App\Product;
 use App\Mail\UserCreated;
 use App\Mail\UserMailChange;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
 
         User::created(function($user) {
             retry(5,function() use($user){

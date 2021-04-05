@@ -10,14 +10,13 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Symfony\Component\HttpKernal\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use App\Traits\ApiResponser;
 use illuminate\Validation\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
-    use ApiResponser;
+    // use ApiResponser;
     /**
      * A list of the exception types that are not reported.
      *
